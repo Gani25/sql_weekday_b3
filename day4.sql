@@ -34,6 +34,7 @@ select * from actor;
 -- Searching Based On Patterns
 /*
 LIKE
+WILDCARD
 % -> Percentage
 _ -> Underscores
 */
@@ -63,5 +64,41 @@ where first_name like "A%E";
 select * from actor 
 where first_name like "A%E%";
 
+-- Underscore
+/*
+Length Restrict -> 4char
+*/
 
+select * from actor
+where first_name like "____";
 
+select * from actor
+where first_name like "A___";
+
+select * from actor
+where first_name like "A__E";
+
+select * from actor
+where first_name like "A__E%";
+
+-- Sorting
+/*
+Order By
+ASCENDING -> 1 - ... / A - Z -> DEFAULT
+DESCENDING
+*/
+
+-- Single Level Sorting
+select * from actor
+order by first_name ;
+
+select * from actor
+order by first_name desc;
+
+select * from actor
+order by actor_id desc;
+
+-- multi level sort
+
+select * from actor
+order by first_name, actor_id desc ;
