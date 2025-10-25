@@ -61,3 +61,48 @@ select count(*) from country;
 select avg(population) from country;
 select avg(population), sum(population) / count(*)
 from country;
+
+select * from country;
+-- Find all the continent in world
+-- distinct
+select distinct continent from country;
+
+select count(distinct continent) as number_of_continents 
+from country;
+
+-- Find number of countries in each continent
+-- continent , count()
+select * from country
+order by continent;
+
+select * from country
+where continent = "Asia";
+select continent, count(*) from country
+where continent = "Asia";
+
+select continent, count(*) from country
+where continent = "North America";
+-- group by
+
+select continent, count(*) from country
+group by continent;
+
+select name, count(*) from country
+group by name;
+
+select continent, sum(population), count(*), max(population) from country
+group by continent;
+
+select * from country
+where continent = "North America" and
+population = 278357000;
+
+
+-- find all the continent which have more than 40 countries
+
+select continent, count(*) as total_countries from country
+group by continent
+having total_countries > 40;
+
+
+
