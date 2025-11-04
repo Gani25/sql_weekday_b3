@@ -69,8 +69,40 @@ on t1.id = t2.id;
 
 -- comapre with value and data
 
+SELECT 
+    t1.id T1ID, value T1Value, t2.id T2ID, data T2Data
+FROM
+    my_table_1 t1
+        INNER JOIN
+    my_table_2 t2 ON value = data;
+
+-- Left Join
+
+
 select t1.id T1ID, value T1Value,
 t2.id T2ID, data T2Data
 from my_table_1 t1
-inner join my_table_2 t2
+left join my_table_2 t2
+on t1.id = t2.id;
+
+select t1.id T1ID, value T1Value,
+t2.id T2ID, data T2Data
+from my_table_1 t1
+left join my_table_2 t2
+on value = data;
+
+
+-- right Join
+
+
+select t1.id T1ID, value T1Value,
+t2.id T2ID, data T2Data
+from my_table_1 t1
+right join my_table_2 t2
+on t1.id = t2.id;
+
+select t1.id T1ID, value T1Value,
+t2.id T2ID, data T2Data
+from my_table_1 t1
+right join my_table_2 t2
 on value = data;
