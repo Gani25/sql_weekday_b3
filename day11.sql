@@ -106,3 +106,83 @@ select cou.* from course cou
 left join student st 
 on cou.cid = st.cid
 where roll_no is null;
+
+select * from student;
+
+truncate table student;
+
+desc student;
+/*
+Error Code: 1828. Cannot drop column 'cid': 
+needed in a foreign key constraint 
+'student_ibfk_1'
+
+*/
+alter table student
+drop cid;
+
+show create table student;
+
+alter table student
+drop constraint student_ibfk_1;
+
+show create table student;
+
+alter table student
+drop cid;
+
+desc student;
+
+
+
+-- add constraint (alter)
+
+alter table student
+add constraint primary key(roll_no);
+
+desc student;
+
+alter table student
+modify roll_no int auto_increment;
+
+desc student;
+
+-- with modify column we can do same thing
+/*alter table student
+modify roll_no int primary key auto_increment;*/
+
+-- add unique on phone
+
+insert into student (name,phone) values
+("Shubham Kokate","12345 12345"),
+("Abhishek Sharma","55555 12345"),
+("Rohan Yadav","12345 68989"),
+("Shruti Shinde","12345 55555"),
+("Pranjal Gupta","12345 11111");
+
+select * from student;
+select * from course;
+
+create table fact_student_course
+(
+	order_id int primary key auto_increment,
+    student_id int not null,
+    course_id int not null,
+    purchase_date datetime not null default current_timestamp
+);
+
+desc fact_student_course;
+
+alter table fact_student_course
+add constraint fk_roll_no foreign key(student_id)
+references student(roll_no);
+
+
+desc fact_student_course;
+show create table fact_student_course;
+
+alter table fact_student_course
+add constraint fk_cid foreign key(course_id)
+references course(cid);
+
+desc fact_student_course;
