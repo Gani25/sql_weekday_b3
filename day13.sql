@@ -91,3 +91,66 @@ from food_item
 cross join variations
 order by name, amount;
 
+-- self join
+/*
+There will be only one table
+*/
+drop table if exists employee;
+create table employee
+(
+	emp_id int,
+    emp_name varchar(100),
+    manager_id int
+);
+
+insert into employee values
+(1,"Rohit Yadav", 10),
+(2,"Pranjal Shinde",9),
+(3,"Rohini Sable", 1),
+(4,"Shubham Kokate", 7),
+(5,"Sakshi Mokal",9),
+(6,"Ketan Kadam", 1),
+(7,"Supriya Shinde", null),
+(8,"Salman Khan",4),
+(9,"John Doe",4),
+(10,"Rakesh Sharma", null);
+
+select * from employee;
+
+alter table employee
+add constraint primary key (emp_id);
+
+desc employee;
+
+alter table employee
+add constraint fk_emp_id foreign key(manager_id)
+references employee(emp_id);
+
+desc employee;
+show create table employee;
+
+-- find all employee name and their manager names
+
+select * from employee;
+select * from employee e1
+join employee e2
+on e1.manager_id = e2.emp_id;
+
+select e1.emp_id, e1.emp_name, 
+e2.emp_name manager_name 
+from employee e1
+join employee e2
+on e1.manager_id = e2.emp_id;
+
+
+select e1.emp_id, e1.emp_name, 
+ ifnull(e2.emp_name,"Owner") manager_name 
+from employee e1
+left join employee e2
+on e1.manager_id = e2.emp_id;
+
+-- do self join on classic models
+select * from classicmodels.employees;
+
+-- find emp_id, emp name, reporting_emp_name, 
+-- current-emp designation, reporting_emp_designation
