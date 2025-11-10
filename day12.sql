@@ -84,3 +84,16 @@ join orderdetails odtl on o.orderNumber = odtl.orderNumber
 join products p on odtl.productCode = p.productCode;
 
 -- find which product is not sold yet!
+select * from products;
+select * from orderdetails;
+
+select * from products p
+left join orderdetails od
+on p.productCode = od.productCode
+order by ordernumber;
+
+
+select p.* from products p
+left join orderdetails od
+on p.productCode = od.productCode
+where ordernumber is null;
