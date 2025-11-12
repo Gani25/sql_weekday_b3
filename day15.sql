@@ -55,3 +55,47 @@ select * from
     ) as emp_with_experience
 where experience >= 5;
 
+
+-- find max and min salaried employee in company 
+select * from employee;
+
+select min(salary) from employee;
+select max(salary) from employee;
+
+select * from my_table_1
+union
+select * from my_table_2;
+select * from my_table_1
+union all
+select * from my_table_2;
+
+select id,data from my_table_1
+union all
+select * from my_table_2;
+
+select data, id from my_table_1
+union all
+select * from my_table_2;
+
+
+select min(salary) from employee
+union
+select max(salary) from employee;
+
+select * from employee 
+where salary in 
+(
+select min(salary) from employee
+union
+select max(salary) from employee
+);
+
+select * from employee 
+where salary in 
+(
+(select min(salary) from employee),
+(select max(salary) from employee)
+);
+
+-- Find Department and count number of employees in that department
+select * from department;
