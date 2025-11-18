@@ -87,3 +87,87 @@ select *, concat(
 ) as age from employee;
 
 
+-- conditional columns values -> case
+
+use classicmodels;
+
+select * from products;
+select productCode, productName, productLine, MSRP 
+from products;
+
+-- if productLine is Motorcycle then give 10% discount on MSRP
+-- if productLine is ClassicCars then give 15% discount on MSRP
+-- if productLine is Vintage Cars then give 25% discount on MSRP
+-- rest all productLine then give 20% discount on MSRP
+
+select distinct productLine from products;
+
+select productCode, productName, productLine, buyPrice, MSRP, 
+case 
+	when productLine = "Motorcycles" then MSRP - 0.1*MSRP
+	when productLine = "Classic Cars" then MSRP - 0.15*MSRP
+	when productLine = "Vintage Cars" then MSRP - 0.25*MSRP
+    else MSRP - 0.2 * MSRP
+end as discount_price
+from products;
+
+
+select *, MSRP-discount_price as saved_amount from 
+(
+	select productCode, productName, productLine, buyPrice, MSRP, 
+	case 
+		when productLine = "Motorcycles" then MSRP - 0.1*MSRP
+		when productLine = "Classic Cars" then MSRP - 0.15*MSRP
+		when productLine = "Vintage Cars" then MSRP - 0.25*MSRP
+		else MSRP - 0.2 * MSRP
+		end as discount_price
+		from products
+) as products_with_discounts;
+
+
+
+
+select *, MSRP-discount_price as saved_amount from 
+(
+	select productCode, productName, productLine, buyPrice, MSRP, 
+	case productLine
+		when "Motorcycles" then MSRP - 0.1*MSRP
+		when "Classic Cars" then MSRP - 0.15*MSRP
+		when "Vintage Cars" then MSRP - 0.25*MSRP
+		else MSRP - 0.2 * MSRP
+		end as discount_price
+		from products
+) as products_with_discounts;
+
+-- coalesce
+
+use sprk_morning;
+
+select * from student;
+
+alter table student 
+add student_phone varchar(15) after name;
+alter table student 
+add emergency_phone varchar(15) after student_phone;
+
+
+select * from student;
+
+update student set emergency_phone = "11111 22222"
+where roll_no = 5;
+
+select * from student;
+
+update student set student_phone = "99999 88888"
+where roll_no = 2;
+
+alter table student
+modify phone varchar(15);
+update student
+set phone = null
+where roll_no = 3;
+
+select * from student;
+
+select roll_no, name, ifnull(coalesce(student_phone, emergency_phone, phone),"Not Found") from student;
+
