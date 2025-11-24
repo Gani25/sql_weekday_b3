@@ -70,6 +70,19 @@ update department
 set did = 100 
 where did = 4;
 
-
 select * from department;
 select * from employee;
+
+
+delimiter $
+create procedure pr1()
+begin
+	select * from employee;
+	select * from department;
+end $
+
+delimiter ;
+
+call pr1();
+
+drop procedure pr1;
