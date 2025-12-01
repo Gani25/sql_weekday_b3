@@ -66,3 +66,11 @@ select productCode, productName, quantityInStock,
 total_product_sold(productCode) qty_sold
 from products
 order by qty_sold desc;
+
+select * from orders
+where customerNumber = 363;
+select * from orderdetails
+where orderNumber in (10100,10192, 10322);
+
+-- how many product he have purchased -> count
+-- total quantity of products he have purchased -> sum(quantityOrdered)
