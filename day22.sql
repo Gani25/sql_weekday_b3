@@ -79,7 +79,7 @@ select @cust_data;
 call countByCustomerNumber(@cust_data);
 
 select @cust_data;
-
+	
 
 set @cust_data = 112;
 select @cust_data;
