@@ -78,3 +78,73 @@ UPDATE `sprk_morning`.`employee` SET `last_name` = 'Gupta' WHERE (`emp_id` = '6'
 
 select * from employee;
 select * from employee_history;
+
+desc employee;
+
+create table employee_profile
+(
+	r_id int primary key auto_increment,
+    emp_id int,
+    message varchar(100)
+);
+
+delimiter $
+
+create trigger emp_reminder
+after insert on employee
+for each row
+
+begin
+
+	if new.first_name is null or new.last_name is null then
+		insert into employee_profile(emp_id, message) values
+        (new.emp_id, "Please complete your profile..");
+	end if;
+
+end $
+
+delimiter ;
+
+show triggers;
+
+select * from employee;
+
+insert into employee(first_name, last_name) values
+( null,null );
+
+select * from employee;
+select * from employee_profile;
+
+delimiter $
+
+create trigger delete_reminder
+after update on employee
+for each row
+begin
+	if new.first_name is not null and new.last_name is not null then
+		delete from employee_profile
+        where emp_id = new.emp_id;
+	end if;
+end $
+
+delimiter ;
+
+
+select * from employee;
+
+update employee
+set first_name = "Anjali"
+where emp_id = 11;
+
+select * from employee;
+select * from employee_profile;
+
+
+update employee
+set last_name = "Verma"
+where emp_id = 11;
+
+
+select * from employee;
+select * from employee_profile;
+
