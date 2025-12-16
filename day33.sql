@@ -59,3 +59,130 @@ show grants for ashwin@localhost;
 drop user ashwin@localhost;
 
 SELECT * FROM mysql.user;
+
+
+-- TCL
+/*
+comit
+rollback
+savepoint
+*/
+
+desc course;
+drop table fact_student_course;
+show tables;
+
+set autocommit = OFF;
+
+use sprk_morning;
+
+select * from course;
+
+insert into course values(default, "Adv Excel","30 Days");
+
+select * from course;
+
+rollback;
+
+select * from course;
+
+insert into course values(default, "Django","30 Days");
+
+select * from course;
+
+update course set cname = "Adv Excel"
+where cid = 1003;
+
+select * from course;
+
+rollback;
+
+
+select * from course;
+
+
+
+update course set cname = "Adv Excel"
+where cid = 1003;
+
+commit;
+
+start transaction;
+
+insert into course values(default, "Django","30 Days");
+
+savepoint s1;
+
+select * from course;
+
+update course set cduration = "1 week"
+where cid = 1005;
+
+savepoint s2;
+
+select * from course;
+
+delete from course;
+
+select * from course;
+
+rollback;
+
+select * from course;
+
+
+
+start transaction;
+
+insert into course values(default, "Django","30 Days");
+
+savepoint s1;
+
+select * from course;
+
+update course set cduration = "1 week"
+where cid = 1005;
+
+savepoint s2;
+
+select * from course;
+
+delete from course;
+
+select * from course;
+
+rollback;
+
+select * from course;
+
+
+start transaction;
+
+insert into course values(default, "AWS","30 Days");
+
+savepoint s1;
+
+select * from course;
+
+update course set cduration = "5 week"
+where cid = 1005;
+
+savepoint s2;
+
+select * from course;
+
+delete from course;
+
+select * from course;
+
+rollback to s2;
+
+select * from course;
+
+
+rollback to s1;
+
+commit;
+
+
+set autocommit =ON;
