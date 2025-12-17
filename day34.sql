@@ -75,5 +75,62 @@ where exists
 (
 	select * from employee e 
 	where e.dept_id = d.did
-)
--- stored in, inout
+);
+-- stored procedure out, inout
+
+select * from employee;
+
+-- procedure -> parameters
+
+-- out 
+
+delimiter $
+
+create procedure emp_info (eid int, out emp_data text)
+begin
+	
+    select concat_ws(" ", "Name =",emp_name, 
+		"Salary =",salary,"Deparment Id =",dept_id) into emp_data 
+        from employee where emp_id = eid;
+end $
+
+delimiter ;
+
+call emp_info(1,@emp_info_var);
+
+select @emp_info_var;
+
+select * from employee;
+
+-- dept_id, count(emp)
+
+-- inout
+delimiter $
+
+create procedure count_emp_dept(inout emp_data int)
+begin
+	
+    select count(*) into emp_data from employee
+    where dept_id = emp_data;
+
+end $
+
+delimiter ;
+
+select @val;
+set @val = 100;
+
+select @val;
+
+call count_emp_dept(@val);
+
+select @val;
+
+select * from employee;
+set @val = 2;
+
+select @val;
+
+call count_emp_dept(@val);
+
+select @val;
